@@ -1,3 +1,6 @@
+-- Determine if a contiguous subsequence exists that sums to a 
+-- specified value
+
 import Debug.Trace
 
 
