@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/RandomProblems/globber"
+	"github.com/mosoto/RandomProblems/globber/globberSA"
 )
 
 type Test struct {
@@ -14,17 +14,21 @@ type Test struct {
 
 func main() {
 	runTest(Test{Glob: "", String: "", Expected: true})
+	runTest(Test{Glob: "", String: "a", Expected: false})
 	runTest(Test{Glob: "a", String: "", Expected: false})
 	runTest(Test{Glob: "abc", String: "abc", Expected: true})
 	runTest(Test{Glob: "a*", String: "abc", Expected: true})
 	runTest(Test{Glob: "a??", String: "abc", Expected: true})
-	runTest(Test{Glob: "a??", String: "a", Expected: true})
+	runTest(Test{Glob: "a??", String: "a", Expected: false})
 	runTest(Test{Glob: "a??", String: "", Expected: false})
 	runTest(Test{Glob: "*", String: "", Expected: true})
 	runTest(Test{Glob: "*", String: "foobar", Expected: true})
 	runTest(Test{Glob: "**", String: "foobar", Expected: true})
 	runTest(Test{Glob: "*o*", String: "foobar", Expected: true})
 	runTest(Test{Glob: "*o*", String: "bar", Expected: false})
+	runTest(Test{Glob: "*o*??", String: "wow42", Expected: true})
+	runTest(Test{Glob: "*o*??", String: "wow", Expected: false})
+	runTest(Test{Glob: "*o*?*", String: "wow", Expected: true})
 }
 
 func runTest(testcase Test) {
@@ -39,6 +43,6 @@ func runTest(testcase Test) {
 }
 
 func match(glob string, str string) bool {
-	globber := NewGlobber(glob)
+	globber := globberSA.NewGlobber(glob)
 	return globber.Matches(str)
 }
